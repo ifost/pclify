@@ -1,0 +1,41 @@
+ESC *t # R = 300 dpi image coming
+ESC *r # A = start raster graphics (what position # = 1 means "here")
+ESC *b # M = compression method (# = 0 means unencoded)
+ESC *b # W = raster data ( # = number of bytes)
+
+
+ESC *r B = end of raster graphics (doesn't reset compression mode, etc)
+ESC *b # Y = raster Y offset (# = number of raster lines)
+
+ESC *r # S = width in raster rows
+ESC *r # T = height in raster rows
+ESC *r # F = orientation
+
+----------------------------------------------------------------------
+(s # t
+ESC ( 8U  = Use Roman-8
+ESC ( s 0 P = fixed width spacing for primary font
+ESC ( s 1 P = proportional with spacing for primary font
+
+ESC ( s # H = primary pitch
+ESC ) s # H = secondary pitch
+ESC ( s # V = primary height
+ESC ) s # V = secondary height
+
+ESC ( s # V = primary style   (0 = upright, 1 = italic, ...)
+ESC ) s # V = secondary sytle
+
+ESC ( s # B = primary stroke weight (-7 to 7)
+ESC ) s # B = secondary stroke weight (-7 to 7)
+
+ESC ( s # T = Primary typeface family ( 0 = courier, 16602 = arial, 4119 = century schoolbook )
+
+ESC ( # X  = set font # as primary
+ESC & d 0 D  - fixed underline
+ESC & d 3 D  - floating underline
+ESC & d @ - turn off underline
+
+ESC * c 0 S = delete all temporary and permanent symbol sets
+
+ESC & l # C = lines per inch
+

@@ -1,0 +1,76 @@
+#!/bin/sh
+
+# This script uses tricklet (installed in /opt/tricklet) to figure out whether
+# a printer is a Canon or Lexmark (or HP). It requires SNMP to be working on
+# the target printer, and to have a community name of 'public'.
+#
+# It updates cache files, either ~/.printer-vendors/ or /etc/lp/vendors/
+#
+# Author: Greg Baker
+
+if [ "$#" -eq 0 -o "$1" = "all" -o "$1" = "parallel" ]
+then
+    for file in /etc/lp/interface/*
+    do
+      printer_name=$(basename $file)
+      case $printer_name in
+        *_l) continue;; 
+        model.orig) continue;; 
+        *)
+          if [ "$2" = "parallel" -o "$1" = "parallel" ]
+          then
+           sh $0 $printer_name &  
+          else
+           sh $0 $printer_name 
+          fi
+          ;;
+       esac
+    done
+    wait
+    exit 0
+fi
+
+if [ $(whoami) = "root" ]
+then
+  CACHE_DIR=/etc/lp/vendors
+else
+  CACHE_DIR=~/.printer-vendors
+fi
+
+mkdir -p $CACHE_DIR
+
+printer_name=$1
+file=/etc/lp/interface/$printer_name
+
+if [ ! -e $file ]
+then
+  echo "/etc/lp/interface/$printer_name does not exist" 1>&2 
+  exit 1
+fi
+
+
+if grep -q '^PERIPH=' $file
+then
+   IP=$(grep '^PERIPH=' $file | sed 's/^PERIPH=//')
+   ERROR_FILE=~/.printermode.$$.tricklet.stderr
+   description=$(echo sysDescr | /opt/tricklet/bin/snmp-get $IP 2> $ERROR_FILE | cut -d= -f2-)
+   if grep -q retries $ERROR_FILE
+   then
+       # echo "$printer_name is not responding." 1>&2
+     rm $ERROR_FILE
+     exit 3
+   fi
+   rm $ERROR_FILE
+   case "$description" in
+     *Canon*) vendor=Canon ;;
+     *Lexmark*) vendor=Lexmark ;;
+     *HP*ETHERNET*) vendor=HP ;;
+     *) echo "I don't know what $printer_name ($IP) is -- it's a $description"  1>&2 
+        exit 4;;
+   esac
+   echo $vendor > $CACHE_DIR/$printer_name
+else
+  echo "$printer_name is not a JetDirect printer" 1>&2
+  exit 2
+fi
+  

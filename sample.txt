@@ -1,0 +1,14 @@
+set font arial 11
+set lines per inch 12
+                                             **TERMS & CONDITIONS OF THE LOAN AGREEMENT**
+set font arial 7
+set line height 0.1 inches
+
+1.  **(Definitions)** **Balance Due** means the sum of any Instalments due but unpaid **plus** all future Instalments (less the Credit Charge component of such Instalments __as__
+__determined by AFS__) **plus** any other money owing under the Current Loan Agreement.  **Current Loan Agreement** means the loan agreement constituted by AFS' acceptance
+of this Loan Request;  **Instalments** means the monthly instalments of the Loan and Credit Charge;  **Insurance** means any insurance effected now or at any time in the future
+where Borrower is an insured party and the premiums have been wholly or partly funded by AFS;  **Insurance Proceeds** means all moneys at any time paid or payable to
+borrower under any Insurance by way of premium refund (whether on cancellation or otherwise) or as indemnity for loss;  **Insurer** means an insurer of any Specified
+Insurance or its agent;  **Loan Agreement** means a loan agreement constituted by AFS' acceptance of a Loan Request;  **Loan Request** means this document and any other
+document where Borrower requests AFS to advance a loan to Borrower to assist Borrower in funding insurances;  **Master Security Agreement** means a Loan Agreement
+between Borrower and AFS entered into prior to the date on which this Loan Request is made by Borrower to AFS under which Borrower has assigned its interest in and
